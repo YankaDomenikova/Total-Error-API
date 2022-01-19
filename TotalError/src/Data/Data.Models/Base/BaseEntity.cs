@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Models.Base;
+using Data.Models.Base;
 
 namespace Data.Models.Base
 {
