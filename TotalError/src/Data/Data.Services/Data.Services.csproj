@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DtoModels\" />
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data.AppDbContext\Data.AppDbContext.csproj" />
+    <ProjectReference Include="..\Data.Utilities\Data.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
