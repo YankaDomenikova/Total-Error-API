@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Models.Base;
+using Data.Models.Base;
 
-namespace Models.Entities
+
+namespace Data.Models.Entities
 {
     public class Order : BaseEntity
     {
@@ -17,7 +18,7 @@ namespace Models.Entities
         public string OrderID { get; set; }
         public string CountryId { get; set; }
         public Country Country { get; set; }
-        public string SaleId { get; set; }
         public Sale Sale { get; set; }
+        public DateTime FileDate { get; set; }
     }
 }

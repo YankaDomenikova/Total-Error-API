@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Base
+using Models.Base;
+
+namespace Data.Models.Base
 {
     public class BaseEntity : IEntity
     {

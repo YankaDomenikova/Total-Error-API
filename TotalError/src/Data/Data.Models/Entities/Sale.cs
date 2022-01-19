@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Models.Base;
+using Data.Models.Base;
 
-namespace Models.Entities
+
+namespace Data.Models.Entities
 {
     public class Sale : BaseEntity
     {
@@ -19,5 +20,6 @@ namespace Models.Entities
         public double TotalProfit { get; set; }
         public string OrderId { get; set; }
         public Order Order { get; set; }
+        public DateTime FileDate { get; set; }
     }
 }
