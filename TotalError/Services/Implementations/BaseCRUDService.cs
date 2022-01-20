@@ -26,7 +26,7 @@ namespace Services.Implementations
 
         public ApplicationDbContext DbContext { get; }
 
-        public void ReadFile(string dir)
+        public async Task ReadFile(string dir)
         {
             string[] files = System.IO.Directory.GetFiles(dir);
 
@@ -48,7 +48,7 @@ namespace Services.Implementations
                             records = csv.GetRecords<FileTransferModel>().ToList();
                         }
                         DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
-                        SaveToDB(records, fileName);
+                        await SaveToDB(records, fileName);
 
                     }
                     DbContext.SaveChanges();
@@ -62,7 +62,7 @@ namespace Services.Implementations
                         records = csv.GetRecords<FileTransferModel>().ToList();
                     }
                     DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
-                    SaveToDB(records, fileName);
+                    await SaveToDB(records, fileName);
                     DbContext.SaveChanges();
                 }
 
@@ -71,7 +71,7 @@ namespace Services.Implementations
 
         }
 
-        public void SaveToDB(List<FileTransferModel> records, string fileName)
+        public async Task SaveToDB(List<FileTransferModel> records, string fileName)
         {
             Region currentRegion;
 
@@ -172,7 +172,6 @@ namespace Services.Implementations
                     }
                 }
             }
-
         }
     }
 }
