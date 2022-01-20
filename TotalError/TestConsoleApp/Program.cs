@@ -1,6 +1,4 @@
-﻿using System;
-
-using Data;
+﻿using Data;
 
 using Infrastructure.Constants;
 
@@ -8,9 +6,9 @@ using Services.Implementations;
 
 namespace TestConsoleApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             BaseCRUDService baseCRUD = new BaseCRUDService(new ApplicationDbContext());
             baseCRUD.ReadFile(DirectoryConstant.Directory);
