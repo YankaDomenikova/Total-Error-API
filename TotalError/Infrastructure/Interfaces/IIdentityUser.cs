@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 using Infrastructure.DtoModels;
 
-using Models.Entities;
-
 namespace Infrastructure.Interfaces
 {
-    public interface IBaseCRUD
+    public interface IIdentityUser
     {
-        public void ReadFile(string dir);
-        public void SaveToDB(List<FileTransferModel> records, string fileName);
+        public Task<string> Register(UserVM model);
+        public Task<string> Login(UserVM model);
     }
 }

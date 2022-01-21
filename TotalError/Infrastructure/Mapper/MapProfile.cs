@@ -20,6 +20,7 @@ namespace Infrastructure.Mapper
             CreateMap<Country, CountryDto>().ReverseMap();
             CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<Sale, SaleDto>().ReverseMap();
+            CreateMap<User, UserVM>().ReverseMap();
         }
     }
 }

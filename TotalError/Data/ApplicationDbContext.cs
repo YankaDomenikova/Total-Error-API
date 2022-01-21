@@ -19,6 +19,7 @@ namespace Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<LastReadedFile> LastReadedFiles { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

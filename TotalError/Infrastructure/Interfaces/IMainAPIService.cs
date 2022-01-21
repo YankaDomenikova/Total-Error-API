@@ -12,5 +12,6 @@ namespace Infrastructure.Interfaces
     {
         public List<RegionDto> GetRegions();
         public List<CountryDto> GetCountriesByRegion(string id);
+        public CountryDto GetCountryByName(string name);
     }
 }

@@ -18,13 +18,15 @@ namespace TestConsoleApp
         public static async Task Main(string[] args)
         {
             BaseCRUDService baseCRUD = new BaseCRUDService(new ApplicationDbContext());
-            await baseCRUD.ReadFile(DirectoryConstant.Directory);
+            
+            baseCRUD.ReadFile(DirectoryConstant.Directory);
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Region, RegionDto>());
-            var mapper = new Mapper(config);
 
-            MainAPIService mainAPIService = new MainAPIService(new ApplicationDbContext(), mapper);
-            var res = mainAPIService.GetRegions();
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<Region, RegionDto>());
+            //var mapper = new Mapper(config);
+
+            //MainAPIService mainAPIService = new MainAPIService(new ApplicationDbContext(), mapper);
+            //var res = mainAPIService.GetRegions();
         }
     }
 }

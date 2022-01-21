@@ -35,7 +35,16 @@ namespace Services.Implementations
         }
         public List<CountryDto> GetCountriesByRegion(string id)
         {
-            throw new NotImplementedException();
+            var res = DbContext.Countries.Where(x => x.RegionId == id).ToList();
+            var mapped = Mapper.Map<List<CountryDto>>(res);
+            return mapped;
+        }
+
+        public CountryDto GetCountryByName(string name)
+        {
+            var res = DbContext.Countries.FirstOrDefault(x => x.CountryName.ToLower() == name.ToLower());
+            var mapped = Mapper.Map<CountryDto>(res);
+            return mapped;
         }
     }
 }
