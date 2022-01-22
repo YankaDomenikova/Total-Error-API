@@ -13,9 +13,9 @@ namespace Infrastructure.DtoModels
         public string OrderPriority { get; set; }
         public DateTime OrderDate { get; set; }
         public string OrderID { get; set; }
-        public string CountryId { get; set; }
-        public CountryDto Country { get; set; }
+        //public string CountryId { get; set; }
+        //public CountryDto Country { get; set; }
         public SaleDto Sale { get; set; }
-        public DateTime FileDate { get; set; }
+        //public DateTime FileDate { get; set; }
     }
 }

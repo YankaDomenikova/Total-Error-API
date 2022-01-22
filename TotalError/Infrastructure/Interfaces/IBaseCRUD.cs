@@ -12,7 +12,7 @@ namespace Infrastructure.Interfaces
 {
     public interface IBaseCRUD
     {
-        public void ReadFile(string dir);
-        public void SaveToDB(List<FileTransferModel> records, string fileName);
+        public Task ReadFile(string dir);
+        public Task SaveToDB(List<FileTransferModel> records, string fileName);
     }
 }

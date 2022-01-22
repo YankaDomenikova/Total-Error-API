@@ -26,7 +26,7 @@ namespace Services.Implementations
 
         public ApplicationDbContext DbContext { get; }
 
-        public void ReadFile(string dir)
+        public async Task ReadFile(string dir)
         {
             string[] files = System.IO.Directory.GetFiles(dir);
 
@@ -49,7 +49,7 @@ namespace Services.Implementations
                             records = csv.GetRecords<FileTransferModel>().ToList();
                         }
                         DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
-                        SaveToDB(records, fileName);
+                        await SaveToDB(records, fileName);
                         DbContext.SaveChanges();
                     }
                 }
@@ -61,14 +61,14 @@ namespace Services.Implementations
                         records = csv.GetRecords<FileTransferModel>().ToList();
                     }
                     DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
-                    SaveToDB(records, fileName);
+                    await SaveToDB(records, fileName);
                     DbContext.SaveChanges();
                 }
             }
         }
 
 
-        public void SaveToDB(List<FileTransferModel> records, string fileName)
+        public async Task SaveToDB(List<FileTransferModel> records, string fileName)
         {
             for (int i = 0; i < records.Count(); i++)
             {
@@ -105,7 +105,6 @@ namespace Services.Implementations
                     country.Orders.Add(order);
                     newRegion.Countries.Add(country);
                     DbContext.Regions.Add(newRegion);
-                    //DbContext.SaveChanges();
 
                 }
                 else
@@ -139,7 +138,6 @@ namespace Services.Implementations
                         };
                         newCountry.Orders.Add(order);
                         DbContext.Countries.Add(newCountry);
-                        //DbContext.SaveChanges();
                     }
                     else
                     {

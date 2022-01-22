@@ -17,6 +17,6 @@ namespace Infrastructure.DtoModels
         public double TotalProfit { get; set; }
         public string OrderId { get; set; }
         public OrderDto Order { get; set; }
-        public DateTime FileDate { get; set; }
+        //public DateTime FileDate { get; set; }
     }
 }
