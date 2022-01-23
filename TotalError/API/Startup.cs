@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using API.Scheduler;
+
 using Data;
 
 using Infrastructure.DtoModels;
@@ -21,6 +23,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
+using Quartz;
 
 using Services.Implementations;
 
@@ -42,12 +46,16 @@ namespace API
             services.AddControllers();
             services.AddRouting();
 
+
+            // My Services --->
             services.AddScoped<IMainAPIService, MainAPIService>();
             services.AddScoped<ApplicationDbContext>();
             services.AddAutoMapper(typeof(MapProfile));
             services.AddScoped<IIdentityUser, IdentityUserService>();
+            // <--- My Services
 
-            // -> JWT
+
+            // JWT --->
             services.Configure<TokenModel>(Configuration.GetSection("tokenManagement"));
             var token = Configuration.GetSection("tokenManagement").Get<TokenModel>();
             var secret = Encoding.ASCII.GetBytes(token.Secret);
@@ -67,7 +75,28 @@ namespace API
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-            // <- JWT
+            // <--- JWT
+
+
+            // Quartz --->
+            services.AddQuartz(q => 
+            {
+                q.SchedulerId = "Scheduler-Core";
+                q.UseMicrosoftDependencyInjectionJobFactory();
+                q.UseInMemoryStore();
+                q.ScheduleJob<SchedulerReader>(trigger => trigger
+                    .StartAt(DateBuilder.EvenSecondDate(DateTimeOffset.Now.AddSeconds(5)))
+                    //.WithDailyTimeIntervalSchedule(x => x.WithIntervalInHours(12))
+                    .WithDescription("Scheduler was triggered."));
+                q.AddJob<SchedulerReader>(job => job.StoreDurably().WithDescription("Run job."));
+               
+            });
+            services.AddQuartzHostedService(options => 
+            {
+                options.WaitForJobsToComplete = true;
+            });
+            // <--- Quartz
+
 
             services.AddSwaggerGen(c =>
             {
