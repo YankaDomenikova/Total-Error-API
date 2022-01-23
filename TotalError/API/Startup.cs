@@ -89,6 +89,12 @@ namespace API
 
             app.UseRouting();
 
+            app.Use((req, res) =>
+            {
+                var headers = req.Request.Headers.ToList();
+                return res.Invoke();
+            });
+
             app.UseAuthentication();
 
             app.UseAuthorization();

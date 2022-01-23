@@ -25,7 +25,7 @@ namespace API.Controllers
 
         public IMainAPIService MainAPIService { get; }
 
-        
+        [HttpGet]
         [Route("all_regions")]
         public IActionResult GetRegions()
         {
@@ -33,6 +33,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        [HttpGet]
         [Route("all_countries")]
         public IActionResult GetCountries()
         {
@@ -40,7 +41,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("country_by_name")]
         public IActionResult GetCountryByName([FromForm]string name)
         {
@@ -48,10 +49,11 @@ namespace API.Controllers
             return Ok(res);
         }
 
-
+        [HttpGet]
         [Route("countries_by_region")]
         public IActionResult GetCountriesByRegion([FromForm]string id)
         {
+           // id = "a04378b7-710b-45cd-a872-471bf58bf1e4";
             var res = MainAPIService.GetCountriesByRegion(id);
             return Ok(res);
         }

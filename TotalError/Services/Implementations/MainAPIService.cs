@@ -72,7 +72,17 @@ namespace Services.Implementations
 
         public CountryDto GetCountryByName(string name)
         {
-            var res = DbContext.Countries.FirstOrDefault(x => x.CountryName.ToUpper() == name.ToUpper());
+            //var res = DbContext.Countries.FirstOrDefault(x => x.CountryName.ToUpper() == name.ToUpper());
+            var res = DbContext.Countries
+                .Where(x => x.CountryName.ToUpper() == name.ToUpper())
+                .Select(x => new CountryDto()
+                {
+                    CountryName = x.CountryName,
+                    RegionName = x.Region.RegionName,
+                    OrdersCount = x.Orders.Count()
+                })
+                .FirstOrDefault();
+
             var mapped = Mapper.Map<CountryDto>(res);
             return mapped;
         }
