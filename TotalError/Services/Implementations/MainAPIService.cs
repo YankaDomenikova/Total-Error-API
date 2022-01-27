@@ -72,7 +72,6 @@ namespace Services.Implementations
 
         public CountryDto GetCountryByName(string name)
         {
-            //var res = DbContext.Countries.FirstOrDefault(x => x.CountryName.ToUpper() == name.ToUpper());
             var res = DbContext.Countries
                 .Where(x => x.CountryName.ToUpper() == name.ToUpper())
                 .Select(x => new CountryDto()
@@ -95,7 +94,6 @@ namespace Services.Implementations
                 .Select(x => new CountryDto()
                 {
                     CountryName = x.CountryName,
-                    OrdersCount = x.Orders.Count(),
                     TotalProfit = Math.Round(x.Orders.Sum(z => z.Sale.TotalProfit), 2),
                     UnitsSold = x.Orders.Select(z => z.Sale.UnitsSold).Sum()
                 })

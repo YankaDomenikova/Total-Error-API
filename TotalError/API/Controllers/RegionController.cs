@@ -53,7 +53,6 @@ namespace API.Controllers
         [Route("countries_by_region")]
         public IActionResult GetCountriesByRegion([FromForm]string id)
         {
-           // id = "a04378b7-710b-45cd-a872-471bf58bf1e4";
             var res = MainAPIService.GetCountriesByRegion(id);
             return Ok(res);
         }
@@ -65,7 +64,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("cost_of_country")]
         public IActionResult GetTotalCostOfCountry([FromForm] string name)
         {

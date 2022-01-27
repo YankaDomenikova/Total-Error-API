@@ -10,8 +10,7 @@ namespace Infrastructure.DtoModels
     {
         public string CountryName { get; set; }
         public string RegionName { get; set; }
-        //public string RegionId { get; set; }
-        //public RegionDto Region { get; set; }
+
         public int OrdersCount { get; set; }
         public double TotalRevenue{ get; set; }
         public double TotalCost { get; set; }

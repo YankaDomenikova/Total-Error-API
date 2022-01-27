@@ -31,7 +31,6 @@ namespace Services.Implementations
             string[] files = System.IO.Directory.GetFiles(dir);
 
             List<FileTransferModel> records = new List<FileTransferModel>();
-            List<Region> data;
 
             var lastReadedDate = DbContext.LastReadedFiles.OrderByDescending(x => x.LastReaded);
 
@@ -48,8 +47,9 @@ namespace Services.Implementations
                         {
                             records = csv.GetRecords<FileTransferModel>().ToList();
                         }
-                        DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
                         await SaveToDB(records, fileName);
+
+                        DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
                         DbContext.SaveChanges();
                     }
                 }
@@ -60,21 +60,26 @@ namespace Services.Implementations
                     {
                         records = csv.GetRecords<FileTransferModel>().ToList();
                     }
-                    DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
                     await SaveToDB(records, fileName);
+
+                    DbContext.LastReadedFiles.Add(new LastReadedFile() { LastReaded = DateTime.Parse(fileName) });
                     DbContext.SaveChanges();
                 }
+                
             }
         }
 
-
         public async Task SaveToDB(List<FileTransferModel> records, string fileName)
         {
+            List<Region> regionsInDb = DbContext.Regions.ToList();
+            List<Country> countriesInDb = DbContext.Countries.ToList();
+
+
             for (int i = 0; i < records.Count(); i++)
             {
-                Region currentRegion = DbContext.Regions.FirstOrDefault(x => x.RegionName.ToUpper() == records[i].RegionName.ToUpper());
+                Region currentRegion = regionsInDb.FirstOrDefault(x => x.RegionName.ToUpper() == records[i].RegionName.ToUpper());
 
-                if (currentRegion == null)
+                if(currentRegion == null)
                 {
                     Region newRegion = new Region();
                     newRegion.RegionName = records[i].RegionName;
@@ -104,12 +109,14 @@ namespace Services.Implementations
                     };
                     country.Orders.Add(order);
                     newRegion.Countries.Add(country);
-                    DbContext.Regions.Add(newRegion);
+                    countriesInDb.Add(country);
+                    regionsInDb.Add(newRegion);
 
+                    DbContext.Regions.Add(newRegion);
                 }
                 else
                 {
-                    Country currentCountry = DbContext.Countries.FirstOrDefault(x => x.CountryName.ToUpper() == records[i].CountryName.ToUpper());
+                    Country currentCountry = countriesInDb.FirstOrDefault(x => x.CountryName.ToUpper() == records[i].CountryName.ToUpper());
 
                     if (currentCountry == null)
                     {
@@ -137,6 +144,7 @@ namespace Services.Implementations
                             FileDate = DateTime.Parse(fileName)
                         };
                         newCountry.Orders.Add(order);
+                        countriesInDb.Add(newCountry);
                         DbContext.Countries.Add(newCountry);
                     }
                     else
@@ -161,11 +169,10 @@ namespace Services.Implementations
                             FileDate = DateTime.Parse(fileName)
                         };
                         DbContext.Orders.Add(order);
-                        //DbContext.SaveChanges();
                     }
                 }
-                DbContext.SaveChanges();
             }
+            await DbContext.SaveChangesAsync();
         }
     }
 }

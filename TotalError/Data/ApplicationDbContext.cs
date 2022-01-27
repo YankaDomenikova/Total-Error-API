@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace Data
                 @"Server=DESKTOP-5KJ75V9\SQLEXPRESS;Database=TotalErrorDb;Trusted_Connection=True");
         }
 
-        public override int SaveChanges()
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var entries = this.ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && x.State == EntityState.Added || x.State == EntityState.Deleted).ToList();
 
@@ -49,7 +50,7 @@ namespace Data
             }
             try
             {
-                return base.SaveChanges();
+                return await base.SaveChangesAsync();
             }
             catch (DbUpdateException e)
             {
